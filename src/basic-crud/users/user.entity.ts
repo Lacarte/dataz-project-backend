@@ -6,7 +6,7 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 25 })
+    @Column({ length: 50 })
     fullName:string;
 
     @Column('date') 

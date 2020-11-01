@@ -12,13 +12,13 @@ export class UsersService {
         return await this.usersRepository.save(user);
     }
 
-    async getUsers(user: User): Promise<User[]> {
+    async getUsers(): Promise<User[]> {
         return await this.usersRepository.find();
     }
 
     async getUser(_id: number): Promise<User[]> {
         return await this.usersRepository.find({
-            select: ["fullName", "birthday", "isActive"],
+            select: ["id","fullName", "birthday", "isActive"],
             where: [{ "id": _id }]
         });
     }
