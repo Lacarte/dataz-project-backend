@@ -7,16 +7,16 @@ async function bootstrap() {
 
 
   const options = new DocumentBuilder()
-  .setTitle('Todo Crud')
-  .setDescription('The todo API description')
+  .setTitle('DATAZ Api documentation' )
+  .setDescription('DATAZ Api documentation description')
   .setVersion('1.0')
-  .addTag('todo')
   .build();
 const document = SwaggerModule.createDocument(app, options);
 SwaggerModule.setup('api/docs', app, document);
 
 
-
   await app.listen(3000);
+  console.log(`Application is running on: ${await app.getUrl()}`);
+
 }
 bootstrap();

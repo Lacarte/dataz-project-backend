@@ -8,11 +8,11 @@ content-type: application/json
 
 {
     "id": null,
-    "fullName": "Glaby Lacarte",
-    "birthday":"1984-01-01",
+    "fullName": "Franck Duval",
+    "birthday":"2004-01-01",
     "isActive":true
 }
 
 
 ###
-GET http://localhost:3000/users/1
+GET http://localhost:3000/users/5

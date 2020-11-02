@@ -1,1 +1,24 @@
 npm run start:dev
+
+http://localhost:3000/api/docs/
+
+Nest Autentication
+-Passport
+-Bcrypt
+-jwt
+
+
+
+
+nest g class user/dtos/editUSer.dto --no-spec
+
+npm run start:dev
+
+
+//to remove the dist directory
+npm run prebuild
+npm run build
+
+
+ npm run migration:generate first_migration
+ npm run migration:run

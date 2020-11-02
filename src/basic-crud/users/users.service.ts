@@ -1,33 +1,66 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { CreateUserDto } from '../dtos/createUser.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(User) private usersRepository: Repository<User>,
+  ) {}
 
-    constructor(@InjectRepository(User) private usersRepository: Repository<User>) { }
+  // async createUser(user: CreateUserDto): Promise<User> {
+  //   return await this.usersRepository.save(user);
+  // }
+  async createUser(user: CreateUserDto): Promise<User> {
+    const newUser = await this.usersRepository.create(user);
+    return await this.usersRepository.save(newUser);
+  }
 
-    async createUser(user: User): Promise<User> {
-        return await this.usersRepository.save(user);
-    }
+  async getAllUsers(): Promise<User[]> {
+    return await this.usersRepository.find();
+  }
 
-    async getUsers(): Promise<User[]> {
-        return await this.usersRepository.find();
-    }
+  /*   async getUser(_id: number): Promise<User[]> {
+    return await this.usersRepository.find({
+      select: [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'createdAt',
+        'birthdate',
+        'isActive',
+      ],
+      where: [{ id: _id }],
+    });
+  }
+ */
 
-    async getUser(_id: number): Promise<User[]> {
-        return await this.usersRepository.find({
-            select: ["id","fullName", "birthday", "isActive"],
-            where: [{ "id": _id }]
-        });
-    }
+  async getUser(_id: number): Promise<User[]> {
+    const user = await this.usersRepository.find({
+      select: [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'createdAt',
+        'birthdate',
+        'isActive',
+      ],
+      where: [{ id: _id }],
+    });
 
-    async updateUser(user: User) {
-        this.usersRepository.save(user)
-    }
+    if (!user) throw new NotFoundException("user don't exist");
+    return user;
+  }
 
-    async deleteUser(user: User) {
-        this.usersRepository.delete(user);
-    }
+  async updateUser(user: User) {
+    this.usersRepository.save(user);
+  }
+
+  async deleteUser(user: User) {
+    this.usersRepository.delete(user);
+  }
 }
